@@ -133,7 +133,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void startActivity() {
-        startActivity(new Intent(SplashActivity.this,TabmainActivity.class));
+        startActivity(new Intent(SplashActivity.this,MainActivity.class));
         overridePendingTransition(android.R.anim.fade_in,
                 android.R.anim.fade_out);
         finish();

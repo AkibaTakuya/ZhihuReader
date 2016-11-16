@@ -1,10 +1,5 @@
 package com.meowzv.zhihureader.ui.view.flashview;
 
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -37,6 +32,11 @@ import com.meowzv.zhihureader.ui.view.flashview.effect.InRightUpTransformer;
 import com.meowzv.zhihureader.ui.view.flashview.effect.RotateTransformer;
 import com.meowzv.zhihureader.ui.view.flashview.effect.ZoomOutPageTransformer;
 import com.meowzv.zhihureader.ui.view.flashview.listener.FlashViewListener;
+
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -121,7 +121,6 @@ public class FlashView extends FrameLayout{
 		lp.setMargins(5, 0, 0, 0);
 		for (int i = 0; i < imageUris.size(); i++) 
 		{
-			View bannerView = LayoutInflater.from(context).inflate(R.layout.layout_flash_banner,null);
 			ImageView imageView = new ImageView(getContext());
 			imageView.setScaleType(ScaleType.FIT_XY);// X和Y方向都填满
 			imageLoaderTools.displayImage(imageUris.get(i), imageView);

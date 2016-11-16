@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">ZhihuReader</string>
+    <string name="app_name">知乎日报</string>
     <string name="splash_text">知乎日报</string>
-    <string name="title_activity_tabmain">TabmainActivity</string>
+    <string name="title_activity_tabmain">首页</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -60,7 +60,6 @@ public class NewsFragment extends Fragment {
                 }
             }
         });
-//        mBannerView.setImageUris();
         return rootView;
     }
 
