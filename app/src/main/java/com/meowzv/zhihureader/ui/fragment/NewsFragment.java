@@ -3,6 +3,7 @@ package com.meowzv.zhihureader.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +53,14 @@ public class NewsFragment extends Fragment {
                     top_stories = latestEntity.getTop_stories();
                     if(top_stories != null){
                         ArrayList<String> banners = new ArrayList<String>();
+                        ArrayList<String> titles  = new ArrayList<String>();
                         for(Iterator iterator = top_stories.iterator(); iterator.hasNext();){
-                            banners.add(((LatestEntity.TopStoriesBean)iterator.next()).getImage());
+                            LatestEntity.TopStoriesBean topStoriesBean = (LatestEntity.TopStoriesBean) iterator.next();
+                            banners.add(topStoriesBean.getImage());
+                            titles.add(topStoriesBean.getTitle());
+                            Log.i("jenny",topStoriesBean.getTitle());
                         }
-                        mBannerView.setImageUris(banners);
+                        mBannerView.setImageUris(banners,titles);
                     }
                 }
             }

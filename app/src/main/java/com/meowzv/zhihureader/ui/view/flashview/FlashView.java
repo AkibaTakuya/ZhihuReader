@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager.PageTransformer;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -20,7 +21,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Scroller;
+import android.widget.TextView;
 
 import com.meowzv.zhihureader.R;
 import com.meowzv.zhihureader.ui.view.flashview.effect.AccordionTransformer;
@@ -51,7 +54,7 @@ public class FlashView extends FrameLayout{
 	private ImageHandler mhandler = new ImageHandler(new WeakReference<FlashView>(this));
 	private List<String> imageUris;
 	private Context context;
-	private List<ImageView> imageViewsList;
+	private List<View> imageViewsList;
 	private List<ImageView> dotViewsList;
 	private LinearLayout mLinearLayout;
 	private ViewPager mViewPager;
@@ -79,7 +82,7 @@ public class FlashView extends FrameLayout{
 		initUI(context);
 		if (!(imageUris.size() <= 0)) 
 		{
-			setImageUris(imageUris);//
+			setImageUris(imageUris,null);//
 		}
 	}
 	/**
@@ -93,7 +96,7 @@ public class FlashView extends FrameLayout{
 	}
 	private void initUI(Context context) 
 	{
-		imageViewsList = new ArrayList<ImageView>();
+		imageViewsList = new ArrayList<View>();
 		dotViewsList = new ArrayList<ImageView>();
 		imageUris = new ArrayList<String>();
 		imageLoaderTools = ImageLoaderTools.getInstance(context.getApplicationContext());
@@ -103,7 +106,8 @@ public class FlashView extends FrameLayout{
 		//mFlashViewListener必须实例化
 
 	}
-	public void setImageUris(List<String> imageuris) {
+
+	public void setImageUris(List<String> imageuris,List<String> titles) {
 		if (imageuris.size() <= 0)// 如果得到的图片张数为0，则增加一张默认的图片
 		{
 			imageUris.add("drawable://" + R.mipmap.splash_logo);
@@ -121,10 +125,14 @@ public class FlashView extends FrameLayout{
 		lp.setMargins(5, 0, 0, 0);
 		for (int i = 0; i < imageUris.size(); i++) 
 		{
-			ImageView imageView = new ImageView(getContext());
+			View banner = LayoutInflater.from(context).inflate(R.layout.layout_flash_banner,null);
+			ImageView imageView = (ImageView) banner.findViewById(R.id.flash_banner_view);
+			TextView  bannerText  = (TextView) banner.findViewById(R.id.flash_banner_text);
+			bannerText.setText(titles.get(i));
+//			ImageView imageView = new ImageView(getContext());
 			imageView.setScaleType(ScaleType.FIT_XY);// X和Y方向都填满
 			imageLoaderTools.displayImage(imageUris.get(i), imageView);
-			imageViewsList.add(imageView);
+			imageViewsList.add(banner);
 			ImageView viewDot = new ImageView(getContext());
 			if (i == 0) 
 			{
@@ -194,16 +202,16 @@ public class FlashView extends FrameLayout{
 	private class MyPagerAdapter extends PagerAdapter 
 	{
 		@Override
-		public void destroyItem(View container, int position, Object object) 
+		public void destroyItem(ViewGroup container, int position, Object object)
 		{
 
 		}
 		@Override
-		public Object instantiateItem(View container,  int position) 
+		public Object instantiateItem(ViewGroup container,  int position)
 		{
 			position = position % imageViewsList.size();
-			
-			if (position < 0) 
+
+			if (position < 0)
 			{
 				position = position + imageViewsList.size();
 
@@ -212,25 +220,25 @@ public class FlashView extends FrameLayout{
 			View view = imageViewsList.get(position);
 			view.setTag(position);
 			view.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
-				public void onClick(View v) 
+				public void onClick(View v)
 				{
 					if(mFlashViewListener!=null)
 					{
 						mFlashViewListener.onClick(pos);
 					}else
 					{
-						
+
 					}
-					
+
 				}
 			});
 			ViewParent vp = view.getParent();
-			if (vp != null) 
+			if (vp != null)
 			{
-				ViewPager pager = (ViewPager) vp;
-				pager.removeView(view);
+
+				((ViewGroup)vp).removeView(view);
 			}
 			((ViewPager) container).addView(view);
 			return view;
@@ -290,19 +298,19 @@ public class FlashView extends FrameLayout{
 
 	}
 
-	@SuppressWarnings("unused")
-	private void destoryBitmaps() 
-	{
-		for (int i = 0; i < imageViewsList.size(); i++) 
-		{
-			ImageView imageView = imageViewsList.get(i);
-			Drawable drawable = imageView.getDrawable();
-			if (drawable != null)
-			{
-				drawable.setCallback(null);
-			}
-		}
-	}
+//	@SuppressWarnings("unused")
+//	private void destoryBitmaps()
+//	{
+//		for (int i = 0; i < imageViewsList.size(); i++)
+//		{
+//			View imageView = imageViewsList.get(i);
+//			Drawable drawable = imageView.getDrawable();
+//			if (drawable != null)
+//			{
+//				drawable.setCallback(null);
+//			}
+//		}
+//	}
 
 	public void setEffect(int selectEffect)
 	{
