@@ -1,5 +1,6 @@
 package com.meowzv.zhihureader.api;
 
+import com.meowzv.zhihureader.bean.BeforeEntity;
 import com.meowzv.zhihureader.bean.LatestEntity;
 import com.meowzv.zhihureader.bean.LogoBean;
 

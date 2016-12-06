@@ -1,6 +1,7 @@
 package com.meowzv.zhihureader.api;
 
 import com.meowzv.zhihureader.base.Constant;
+import com.meowzv.zhihureader.bean.BeforeEntity;
 import com.meowzv.zhihureader.bean.LatestEntity;
 import com.meowzv.zhihureader.bean.LogoBean;
 
@@ -56,5 +57,8 @@ public class ReaderApi {
 
     public Observable<LatestEntity> getLatestNews(){
         return mReaderApiService.getLatestNews();
+    }
+    public Observable<LatestEntity> getBeforeNews(String date){
+        return mReaderApiService.getBeforeNews(date);
     }
 }

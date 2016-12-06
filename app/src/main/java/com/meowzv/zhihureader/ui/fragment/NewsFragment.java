@@ -3,6 +3,7 @@ package com.meowzv.zhihureader.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import com.meowzv.zhihureader.R;
 import com.meowzv.zhihureader.adapter.NewsAdapter;
 import com.meowzv.zhihureader.api.ReaderApi;
+import com.meowzv.zhihureader.bean.BeforeEntity;
 import com.meowzv.zhihureader.bean.LatestEntity;
 import com.meowzv.zhihureader.ui.view.flashview.FlashView;
 
@@ -32,6 +34,8 @@ public class NewsFragment extends Fragment {
     private List<LatestEntity.TopStoriesBean> top_stories;
     private List<LatestEntity.StoriesBean> storiesBeens;
     private ListView listView;
+    private SwipeRefreshLayout mRefreshLayout;
+    private NewsAdapter mNewsAdapter;
 
     public static NewsFragment newInstance() {
 
@@ -54,8 +58,9 @@ public class NewsFragment extends Fragment {
         bannerView = inflater.inflate(R.layout.layout_banner_lv,null);
         mBannerView = (FlashView) bannerView.findViewById(R.id.flash_view);
         listView = (ListView) rootView.findViewById(R.id.lv);
+        mRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         bannerView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                500));
+                700));
         listView.addHeaderView(bannerView);
         ReaderApi.getInstance().getLatestNews().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<LatestEntity>() {
             @Override
@@ -64,7 +69,8 @@ public class NewsFragment extends Fragment {
                     top_stories = latestEntity.getTop_stories();
                     storiesBeens= latestEntity.getStories();
                     if(storiesBeens != null) {
-                        listView.setAdapter(new NewsAdapter(getActivity(), storiesBeens,R.layout.layout_news));
+                        mNewsAdapter = new NewsAdapter(getActivity(), storiesBeens,R.layout.layout_news);
+                        listView.setAdapter(mNewsAdapter);
                     }
                     if(top_stories != null){
                         ArrayList<String> banners = new ArrayList<String>();
@@ -79,6 +85,12 @@ public class NewsFragment extends Fragment {
                     }
 
                 }
+            }
+        });
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
             }
         });
         return rootView;

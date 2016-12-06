@@ -9,7 +9,7 @@ import com.meowzv.zhihureader.module.ReaderApiModule;
 import dagger.Component;
 
 /**
- * Created by luwang on 2016/12/6.
+ * Created by Meowzv on 2016/12/6.
  */
 @Component(modules = {AppModule.class, ReaderApiModule.class})
 public interface Appcomponent {
