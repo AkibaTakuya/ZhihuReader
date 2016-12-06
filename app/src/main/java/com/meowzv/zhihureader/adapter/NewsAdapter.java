@@ -1,9 +1,12 @@
 package com.meowzv.zhihureader.adapter;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.meowzv.zhihureader.R;
-import com.meowzv.zhihureader.model.LatestEntity;
+import com.meowzv.zhihureader.bean.LatestEntity;
 import com.yuyh.easyadapter.abslistview.EasyLVAdapter;
 import com.yuyh.easyadapter.abslistview.EasyLVHolder;
 
@@ -20,6 +23,10 @@ public class NewsAdapter extends EasyLVAdapter<LatestEntity.StoriesBean> {
 
     @Override
     public void convert(EasyLVHolder holder, int position, LatestEntity.StoriesBean storiesBean) {
-        holder.setText(R.id.tv,storiesBean.getGa_prefix()).setImageUrl(R.id.iv,storiesBean.getImages().get(0));
+        for (int i = 0; i < storiesBean.getImages().size(); i++){
+            Log.i("jenny",storiesBean.getImages().get(i));
+        }
+        holder.setText(R.id.tv,storiesBean.getTitle());
+        Glide.with(mContext).load(storiesBean.getImages().get(0)).into((ImageView) holder.getView(R.id.iv));
     }
 }

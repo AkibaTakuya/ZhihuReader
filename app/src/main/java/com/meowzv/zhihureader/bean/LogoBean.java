@@ -1,4 +1,4 @@
-package com.meowzv.zhihureader.model;
+package com.meowzv.zhihureader.bean;
 
 /**
  * Created by Meowzv on 16/11/13.

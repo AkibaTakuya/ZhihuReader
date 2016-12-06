@@ -1,4 +1,4 @@
-package com.meowzv.zhihureader.model;
+package com.meowzv.zhihureader.bean;
 
 import java.util.List;
 

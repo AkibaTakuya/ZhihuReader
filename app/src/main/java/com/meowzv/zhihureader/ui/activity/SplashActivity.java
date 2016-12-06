@@ -15,7 +15,7 @@ import com.bumptech.glide.request.target.Target;
 import com.meowzv.zhihureader.R;
 import com.meowzv.zhihureader.api.ReaderApi;
 import com.meowzv.zhihureader.base.BaseActivity;
-import com.meowzv.zhihureader.model.LogoBean;
+import com.meowzv.zhihureader.bean.LogoBean;
 
 import java.io.File;
 import java.io.FileOutputStream;

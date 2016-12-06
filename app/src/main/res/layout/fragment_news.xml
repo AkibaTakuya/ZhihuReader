@@ -1,18 +1,19 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.meowzv.zhihureader.ui.fragment.NewsFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.meowzv.zhihureader.ui.fragment.NewsFragment">
 
-    <com.meowzv.zhihureader.ui.view.flashview.FlashView
-        android:id="@+id/flash_view"
-        android:layout_width="match_parent"
-        android:layout_height="250dp">
-    </com.meowzv.zhihureader.ui.view.flashview.FlashView>
     <ListView
         android:id="@+id/lv"
+        android:divider="#00000000"
+        android:dividerHeight="0dip"
+        android:listSelector="@android:color/transparent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        >
 
     </ListView>
-</FrameLayout>
+</LinearLayout>

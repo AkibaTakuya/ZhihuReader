@@ -1,8 +1,8 @@
 package com.meowzv.zhihureader.api;
 
 import com.meowzv.zhihureader.base.Constant;
-import com.meowzv.zhihureader.model.LatestEntity;
-import com.meowzv.zhihureader.model.LogoBean;
+import com.meowzv.zhihureader.bean.LatestEntity;
+import com.meowzv.zhihureader.bean.LogoBean;
 
 import java.util.concurrent.TimeUnit;
 
