@@ -13,7 +13,7 @@ import com.yuyh.easyadapter.abslistview.EasyLVHolder;
 import java.util.List;
 
 /**
- * Created by luwang on 2016/11/28.
+ * Created by Meowzv on 2016/11/28.
  */
 
 public class NewsAdapter extends EasyLVAdapter<LatestEntity.StoriesBean> {
