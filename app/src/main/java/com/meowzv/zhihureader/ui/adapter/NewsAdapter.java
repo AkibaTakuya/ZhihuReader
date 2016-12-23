@@ -1,4 +1,4 @@
-package com.meowzv.zhihureader.adapter;
+package com.meowzv.zhihureader.ui.adapter;
 
 import android.content.Context;
 import android.util.Log;

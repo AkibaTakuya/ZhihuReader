@@ -46,17 +46,30 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
-        initData();
+        setView();
+        downLoadImageWithText();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
+    private void downLoadImageWithText() {
+        ReaderApi.getInstance().getStartImage().subscribeOn(Schedulers.newThread()).subscribe(new Action1<LogoBean>() {
+            @Override
+            public void call(LogoBean logoBean) {
+                if(logoBean != null){
+                    if(mSharedPreferences != null) {
+                        mSharedPreferences.edit().putString("splash_info_text", logoBean.getText()).apply();
+                    }
+                    try {
+                        Bitmap bitmap = Glide.with(SplashActivity.this).load(logoBean.getImg()).asBitmap().into(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL).get();
+                        saveImageToDisk(bitmap);
+                    } catch (InterruptedException | ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
-    protected void initData() {
+    private void setView() {
         mSharedPreferences = getSharedPreferences("splash_info",MODE_PRIVATE);
         mSplashText.setText(mSharedPreferences.getString("splash_info_text",""));
         Bitmap bitmap = readImageFormDisk();
@@ -66,6 +79,12 @@ public class SplashActivity extends BaseActivity {
             mSplashImage.setImageResource(R.mipmap.ic_launcher);
         }
         mSplashImage.startAnimation(loadAnimation());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     private Animation loadAnimation() {
@@ -79,22 +98,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onAnimationStart(Animation animation) {
-                ReaderApi.getInstance().getStartImage().subscribeOn(Schedulers.newThread()).observeOn(Schedulers.newThread()).subscribe(new Action1<LogoBean>() {
-                    @Override
-                    public void call(LogoBean logoBean) {
-                        if(logoBean != null){
-                            if(mSharedPreferences != null) {
-                                mSharedPreferences.edit().putString("splash_info_text", logoBean.getText()).apply();
-                            }
-                            try {
-                                Bitmap bitmap = Glide.with(SplashActivity.this).load(logoBean.getImg()).asBitmap().into(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL).get();
-                                saveImageToDisk(bitmap);
-                            } catch (InterruptedException | ExecutionException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
+
             }
             /**结束时调用*/
             @Override
@@ -116,9 +120,13 @@ public class SplashActivity extends BaseActivity {
             if(imageFile != null && imageFile.exists()){
                 imageFile.delete();
             }
-            fos = new FileOutputStream(imageFile);
+            if (imageFile != null) {
+                fos = new FileOutputStream(imageFile);
+            }
             bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
-            fos.flush();
+            if (fos != null) {
+                fos.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }finally {

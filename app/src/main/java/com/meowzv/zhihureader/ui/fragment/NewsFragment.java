@@ -12,9 +12,8 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.meowzv.zhihureader.R;
-import com.meowzv.zhihureader.adapter.NewsAdapter;
+import com.meowzv.zhihureader.ui.adapter.NewsAdapter;
 import com.meowzv.zhihureader.api.ReaderApi;
-import com.meowzv.zhihureader.bean.BeforeEntity;
 import com.meowzv.zhihureader.bean.LatestEntity;
 import com.meowzv.zhihureader.ui.view.flashview.FlashView;
 
